@@ -1,0 +1,845 @@
+/* ============ Architecture (system diagram) ============ */
+#architecture {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#architecture .arch-panel {
+  margin-left: clamp(58px, 7vw, 100px);
+  margin-right: 0;
+  padding: 34px 0 34px clamp(12px, 2.5vw, 28px);
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.arch-panel {
+  padding: 34px;
+  overflow: hidden;
+}
+
+.arch-legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.arch-flow-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--green-bright);
+  font-weight: 600;
+}
+
+.flow-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green-bright);
+  box-shadow: 0 0 12px var(--green-bright);
+  animation: pulse 1.6s infinite;
+}
+
+.arch-canvas-wrap {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+}
+
+.arch-canvas {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  min-width: 1100px;
+}
+
+.arch-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.arch-main-path {
+  stroke-dasharray: 14 10;
+  animation: dashFlow 1.2s linear infinite;
+}
+
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+.arch-link-path {
+  transition: opacity 0.3s;
+}
+
+.arch-travel-dot {
+  filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.9));
+}
+
+.arch-canvas-node {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  border-radius: 14px;
+  box-sizing: border-box;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.3, 1), border-color 0.25s;
+}
+
+.arch-canvas-node:hover,
+.arch-canvas-node:focus-visible {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--tint) 55%, transparent);
+  outline: none;
+}
+
+.acn-hint {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tint);
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid color-mix(in srgb, var(--tint) 40%, transparent);
+  opacity: 0;
+  transform: translateY(-3px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.arch-canvas-node:hover .acn-hint,
+.arch-canvas-node:focus-visible .acn-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.acn-ico {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+.acn-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.acn-body strong {
+  font-family: var(--font-head);
+  font-size: 0.82rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.acn-body small {
+  color: var(--text-dim);
+  font-size: 0.66rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.acn-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 2px;
+}
+
+.acn-tags i {
+  font-style: normal;
+  font-size: 0.58rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.arch-spec {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.spec-item {
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.spec-k {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.spec-v {
+  font-family: var(--font-head);
+  font-weight: 600;
+  color: var(--text);
+}
+
+@media (max-width: 720px) {
+  .arch-spec {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============ Architecture resume lines ============ */
+.arch-resume {
+  margin-top: 30px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.arch-resume h3 {
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+
+.arch-resume-intro {
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  margin-bottom: 16px;
+}
+
+.arch-resume-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 18px;
+  padding: 0;
+  margin: 0;
+}
+
+.arch-resume-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.resume-bullet {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 7px;
+  background: linear-gradient(135deg, var(--tint-dim), var(--tint));
+  box-shadow: 0 0 10px color-mix(in srgb, var(--tint) 50%, transparent);
+}
+
+@media (max-width: 720px) {
+  .arch-resume-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============ Architecture detail modal ============ */
+.arch-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(2, 4, 10, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: modalFade 0.2s ease;
+}
+
+@keyframes modalFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.arch-modal {
+  position: relative;
+  width: min(720px, 100%);
+  max-height: 82vh;
+  overflow-y: auto;
+  border-radius: 22px;
+  padding: 30px 32px;
+  animation: modalRise 0.28s cubic-bezier(0.2, 0.8, 0.3, 1);
+  scrollbar-width: thin;
+}
+
+@keyframes modalRise {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.arch-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.arch-modal-close:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: rotate(90deg);
+}
+
+.arch-modal-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-right: 40px;
+  margin-bottom: 22px;
+}
+
+.arch-modal-head .acn-ico {
+  width: 52px;
+  height: 52px;
+}
+
+.arch-modal-head h3 {
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  margin: 0 0 4px;
+}
+
+.arch-modal-head p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.arch-modal-body section {
+  margin-bottom: 22px;
+}
+
+.arch-modal-body section:last-child {
+  margin-bottom: 0;
+}
+
+.arch-modal-body h4 {
+  font-family: var(--font-head);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tint);
+  margin: 0 0 10px;
+}
+
+.arch-modal-body p {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.arch-modal-body ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.arch-modal-body li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.arch-modal-body li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tint);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--tint) 60%, transparent);
+}
+
+.arch-modal-body ul.arch-modal-fail li::before {
+  background: #f87171;
+  box-shadow: 0 0 8px rgba(248, 113, 113, 0.5);
+}
+
+.arch-modal-spec {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+}
+
+.arch-modal-spec > div {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.arch-modal-spec dt {
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 3px;
+}
+
+.arch-modal-spec dd {
+  margin: 0;
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+@media (max-width: 600px) {
+  .arch-modal {
+    padding: 24px 20px;
+  }
+  .arch-modal-spec {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============ Footer status ============ */
+.footer-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  color: var(--green-bright);
+  letter-spacing: 0.04em;
+}
+
+/* ===================================================================== */
+/* RESPONSIVE SYSTEM                                                      */
+/* base  → desktop (>=1200)                                               */
+/* xl    → <1200  · lg → <980 · md → <860 · sm → <720 · xs → <480        */
+/* ===================================================================== */
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ---- Architecture scroll hint (mobile only) ---- */
+.arch-scroll-hint {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  animation: shPulse 2.2s ease-in-out infinite;
+}
+
+.sh-arrow {
+  color: var(--green-bright);
+  animation: shMove 2.2s ease-in-out infinite;
+}
+
+@keyframes shMove {
+  0%, 100% { transform: translateX(0); opacity: 0.6; }
+  50% { transform: translateX(6px); opacity: 1; }
+}
+
+@keyframes shPulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+/* ============================ xl (<1200) ============================ */
+@media (max-width: 1199px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1020px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================ lg (<980) ============================ */
+@media (max-width: 980px) {
+  /* social rail is hidden here → panel can use normal left spacing */
+  #architecture .arch-panel {
+    margin-left: clamp(18px, 5vw, 40px);
+  }
+}
+
+/* ============================ md (<860) ============================ */
+@media (max-width: 860px) {
+  .section {
+    padding-top: 84px;
+  }
+  .section-head {
+    margin-bottom: 38px;
+  }
+  .nav-pill {
+    padding: 9px 12px 9px 16px;
+  }
+  .nav-logo {
+    font-size: 1.3rem;
+  }
+  .hero {
+    padding-top: 118px;
+    padding-bottom: 84px;
+  }
+  .ticker {
+    margin-top: 36px;
+  }
+}
+
+/* ============================ sm (<720) ============================ */
+@media (max-width: 720px) {
+  .section {
+    padding: 72px clamp(16px, 5vw, 28px) 28px;
+  }
+  .section-head {
+    margin-bottom: 32px;
+  }
+  .section-sub {
+    font-size: 0.95rem;
+  }
+  .hero {
+    padding: 106px clamp(16px, 5vw, 28px) 72px;
+  }
+  .hero-title {
+    font-size: clamp(2.6rem, 9vw, 3.6rem);
+  }
+  .hero-scribe {
+    letter-spacing: 0.22em;
+  }
+  .hero-desc {
+    font-size: 0.98rem;
+  }
+  .hero-actions {
+    gap: 12px;
+  }
+  .hero-chips {
+    gap: 10px;
+  }
+  .ticker-item {
+    padding: 7px 14px;
+    font-size: 0.8rem;
+  }
+  .about-bio,
+  .focus-card {
+    padding: 24px;
+  }
+  .skill-card {
+    padding: 22px;
+  }
+  .systems-panel {
+    padding: 24px;
+  }
+  .project-card {
+    padding: 22px;
+  }
+  .journey-card {
+    padding: 24px;
+  }
+  .lead-card {
+    padding: 28px 20px;
+  }
+  .edu-card {
+    padding: 26px 20px;
+  }
+  .contact {
+    padding-bottom: 64px;
+  }
+  .contact-card {
+    padding: 40px 22px;
+  }
+  .arch-scroll-hint {
+    display: flex;
+  }
+  #architecture .arch-panel {
+    padding: 24px 0 24px clamp(12px, 2.5vw, 28px);
+  }
+  .arch-legend {
+    font-size: 0.7rem;
+  }
+  .arch-spec {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 20px;
+  }
+}
+
+/* ============================ xs (<480) ============================ */
+@media (max-width: 480px) {
+  .section {
+    padding: 60px 16px 24px;
+  }
+  .section-head {
+    margin-bottom: 28px;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 7vw, 2rem);
+  }
+  .section-sub {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .hero {
+    padding: 98px 16px 60px;
+  }
+  .hero-title {
+    font-size: clamp(2.2rem, 11vw, 2.9rem);
+  }
+  .hero-scribe {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    margin-top: 10px;
+  }
+  .hero-lead {
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+  .hero-desc {
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-actions .btn,
+  .hero-actions .btn-glass {
+    width: 100%;
+  }
+  .hero-chip {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 9px 14px;
+  }
+  .hero-chip strong {
+    font-size: 1.15rem;
+  }
+  .hero-chip span {
+    font-size: 0.72rem;
+  }
+  .nav {
+    padding: 12px 10px;
+  }
+  .nav-pill {
+    padding: 8px 10px 8px 14px;
+  }
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+  .nav-burger span {
+    width: 20px;
+  }
+  .btn {
+    padding: 13px 22px;
+    font-size: 0.9rem;
+  }
+  .btn-glass {
+    padding: 13px 22px;
+    font-size: 0.9rem;
+  }
+  .ticker-item {
+    padding: 6px 12px;
+    font-size: 0.76rem;
+    gap: 7px;
+  }
+  .ticker-item .skill-icon {
+    border-radius: 6px;
+  }
+  .profile-card {
+    padding: 26px 18px 20px;
+  }
+  .about-bio {
+    padding: 20px;
+  }
+  .about-bio h3 {
+    font-size: 1.35rem;
+  }
+  .focus-card {
+    padding: 20px;
+  }
+  .skill-card {
+    padding: 20px;
+    border-radius: 20px;
+  }
+  .skill-card-top h3 {
+    font-size: 1.05rem;
+  }
+  .skill-chip {
+    font-size: 0.84rem;
+    padding: 7px 12px 7px 8px;
+  }
+  .systems-panel {
+    padding: 20px;
+  }
+  .systems-head {
+    gap: 12px;
+  }
+  .systems-head h3 {
+    font-size: 1.15rem;
+  }
+  .project-card {
+    padding: 20px;
+  }
+  .project-card h3 {
+    font-size: 1.2rem;
+  }
+  .project-num {
+    font-size: 2.2rem;
+  }
+  .journey-card {
+    padding: 20px;
+  }
+  .journey-card-head {
+    gap: 10px;
+  }
+  .journey-card-head h3 {
+    font-size: 1.1rem;
+  }
+  .lead-card {
+    padding: 24px 16px;
+  }
+  .edu-card {
+    padding: 22px 16px;
+    gap: 14px;
+  }
+  .edu-info h3 {
+    font-size: 1.2rem;
+  }
+  .contact-card {
+    padding: 34px 16px;
+  }
+  .contact-item {
+    padding: 14px 14px;
+  }
+  .arch-modal-overlay {
+    padding: 12px;
+    align-items: flex-end;
+  }
+  .arch-modal {
+    padding: 22px 18px 24px;
+    max-height: 88vh;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .arch-modal-head h3 {
+    font-size: 1.2rem;
+  }
+  .arch-modal-head .acn-ico {
+    width: 44px;
+    height: 44px;
+  }
+  .arch-modal-body li,
+  .arch-modal-body p {
+    font-size: 0.88rem;
+  }
+  .arch-modal-spec > div {
+    padding: 10px 12px;
+  }
+  .arch-canvas {
+    min-width: 1000px;
+  }
+  .arch-scroll-hint {
+    margin-top: 10px;
+  }
+}
+
+/* safe-area inset support for notched phones */
+@media (max-width: 720px) {
+  @supports (padding: max(0px)) {
+    .hero {
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+    }
+    .section {
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+    }
+  }
+}
+
+/* compact mode for very short landscape screens */
+@media (max-height: 620px) and (orientation: landscape) {
+  .hero {
+    padding-top: 96px;
+    padding-bottom: 56px;
+    min-height: auto;
+  }
+  .hero-title {
+    font-size: clamp(2rem, 6vw, 3.2rem);
+  }
+  .scroll-hint {
+    display: none;
+  }
+}

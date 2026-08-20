@@ -1,0 +1,262 @@
+/* ============ About (bento) ============ */
+.bento {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 22px;
+}
+
+.about-bio {
+  padding: 34px;
+  height: 100%;
+}
+
+.about-bio-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--orange-bright);
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 6px 14px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 18px;
+}
+
+.about-bio h3 {
+  font-family: var(--font-head);
+  font-size: 1.6rem;
+  line-height: 1.25;
+  margin-bottom: 14px;
+}
+
+.about-bio > p {
+  color: var(--text-dim);
+}
+
+.about-points {
+  margin-top: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.about-points li {
+  position: relative;
+  padding-left: 30px;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+.about-points li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  color: var(--green-bright);
+}
+
+.focus-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  height: 100%;
+}
+
+.focus-card {
+  padding: 24px;
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.focus-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--glass-border-strong);
+}
+
+.focus-card h4 {
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  margin-top: 16px;
+}
+
+.focus-card p {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  margin-top: 6px;
+}
+
+@media (max-width: 860px) {
+  .bento {
+    grid-template-columns: 1fr;
+  }
+  .focus-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============ Skills (tinted glass deck) ============ */
+.skill-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: 22px;
+  align-items: start;
+}
+
+.skill-card {
+  position: relative;
+  border-radius: 24px;
+  padding: 28px;
+  overflow: hidden;
+  background:
+    radial-gradient(130% 100% at 100% 0%, color-mix(in srgb, var(--tint) 13%, transparent), transparent 55%),
+    rgba(255, 255, 255, 0.045);
+  border: 1px solid color-mix(in srgb, var(--tint) 32%, var(--glass-border));
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--tint), transparent);
+  opacity: 0.75;
+}
+
+.skill-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 34%);
+}
+
+.skill-card:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--tint) 55%, var(--glass-border));
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.6), 0 0 40px color-mix(in srgb, var(--tint) 18%, transparent);
+}
+
+.skill-card-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.skill-card-num {
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(120deg, var(--tint), #fff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+
+.skill-card-top h3 {
+  font-family: var(--font-head);
+  font-size: 1.2rem;
+}
+
+.skill-count {
+  margin-left: auto;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tint) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tint) 35%, transparent);
+}
+
+.skill-chip-list {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 9px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid var(--glass-border);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.3, 1), border-color 0.25s, background 0.25s, box-shadow 0.3s;
+}
+
+.skill-chip:hover {
+  transform: translateY(-3px) scale(1.03);
+  border-color: color-mix(in srgb, var(--tint) 55%, transparent);
+  background: color-mix(in srgb, var(--tint) 12%, rgba(255, 255, 255, 0.055));
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45), 0 0 20px color-mix(in srgb, var(--tint) 28%, transparent);
+}
+
+.skill-chip:hover .skill-icon {
+  transform: scale(1.28);
+}
+
+.skill-chip .skill-icon {
+  border-radius: 10px;
+}
+
+.systems-panel {
+  margin-top: 22px;
+  padding: 30px;
+}
+
+.systems-head {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.systems-head h3 {
+  font-family: var(--font-head);
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+}
+
+.systems-head p {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.tag-cloud span {
+  padding: 6px 13px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.09);
+  border: 1px solid rgba(16, 185, 129, 0.24);
+  transition: color 0.2s, background 0.2s;
+}
+
+.tag-cloud span:hover {
+  color: var(--text);
+  background: rgba(194, 98, 26, 0.22);
+  border-color: rgba(245, 158, 11, 0.5);
+}

@@ -7,3 +7,7 @@ dist-ssr
 logs
 *.log
 npm-debug.log*
+# --- security: local env & deps ---
+.env
+.env.*
+!*.env.example
